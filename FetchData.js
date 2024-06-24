@@ -171,3 +171,67 @@ let objectOne = {
 }
 
 objectOne.fun();
+// call() 
+// apply()
+// bind()
+
+// userName = "Vishal"
+
+
+// let objectTwo = {
+//     userName : "Mayank",
+//     age : 20,
+//     isLogin : true,
+//     fun : function greetUser(){
+//         console.log(`Hello ${this.userName}  How r u`);
+//     }
+// }
+
+// // objectTwo.fun();
+
+// // function a(){
+// //     console.log(this.userName + " My name/....");
+// // }
+
+// a.call(objectTwo) /// context change 
+
+
+// function b(age){
+//     console.log(this.userName + " My name/...."+ `Age ${age}`);
+// }
+
+// b.call(objectTwo, 89)
+
+
+//apply(this, [])
+// b.apply(thisContext, [])
+
+// function three([...arr]){ //rest operator
+//     console.log(arr);
+// }
+// function three({arr1, arr2, arr3}){ //rest operator
+//     console.log(arr);
+// }
+
+
+
+// function three(name, age, isLogin){ 
+//     console.log(a);
+// }
+
+
+
+// three.apply(objectTwo, ["Vihal", 45, true])
+
+
+/// bind ()
+
+
+// function four(){ 
+//     console.log(`${this.userName} , ${this.age}, ${this.isLogin}`);
+// }
+
+// // let fun = new Function()
+
+// let bound = four.bind(objectTwo);// it returns a function with added context
+// bound()
