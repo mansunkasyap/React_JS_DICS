@@ -1,52 +1,73 @@
-import http from 'node:http';
-import { config } from 'dotenv';
- import { insert } from './data.js';
+import mongoose from 'mongoose';
+import User from './models/user.model.js';
+// const mongoose = require('mongoose');
+// const { default: User } = require('./models/user.model');
+// const uri = "mongodb+srv://duamayank26:brgZjbiiHwm2scsX@cluster0.6ueys.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-console.log('Hello from Backend..');
+import { connect } from "mongoose";
+import app from "./App.js";
+import Connect from "./Db/conn.js"
 
-config({ path: './.env' });
-console.log(process.env.PORT, "Processs..");
 
-const server = http.createServer((req, res) => {
-    console.log(req.method, 'Requesting to Server...' );
+Connect().then(()=>{
+app.listen(process.env.PORT||3000,()=>{
+console.log(process.env.PORT,"porttttt...");
 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requesting, content-type');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Corrected Allow-Methods
+})
+}).catch((err)=>{
+  console.log("errrrrr..." ,err);
+  
+})
 
-    if (req.url === '/submit' && req.method === 'OPTIONS') {
-        res.writeHead(200);
-        res.end();
-        return;
-    }
-    else if (req.url === '/submit' && (req.method === 'POST' || req.method === 'OPTIONS')) {
-        console.log('got the url **.....');
-        
-        let body = '';
-        let parsedBody ={};
-        req.on('data', (chunk) => {
-            body += chunk.toString();
-            console.log(chunk.toString());
-            parsedBody = JSON.parse(body)
-        });
-        req.on('end', () => {
-            console.log('got the url.....');
-            console.log(parsedBody);
-            const {fn, em, pn, ps} = parsedBody
-            insert(fn,em,pn,ps)
-            // Parsing body as JSON
-            // const parsedBody = JSON.parse(body);
-            // console.log(parsedBody);
 
-            res.writeHead(200, { "Content-Type": 'application/json' });
-            res.end(JSON.stringify({ message: "Data received successfully"}));
-        });
-    } else {
-        res.writeHead(404, { "Content-Type": 'text/html' });
-        res.end("<h1>Page NOT Found from backend</h1>");
-    }
-});
 
-server.listen(process.env.PORT || 5000, () => {
-    console.log(`Listening on ${process.env.PORT}`);
-});
+
+
+
+
+
+
+
+
+
+
+// import {config} from "dotenv";
+
+
+// config({path : "./.env"})
+// console.log(process.env.CONNECTION);
+
+
+
+// // const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
+
+// async function run() {
+//   try {
+//     // Create a Mongoose client with a MongoClientOptions object to set the Stable API version
+//     await mongoose.connect(process.env.CONNECTION);
+//     // await mongoose.connection.db.admin().command({ ping: 1 });
+//     // console.log("Pinged your deployment. You successfully connected to MongoDB!");
+//   const user = new User(
+//     {
+//       username: "Mayank",
+//       password :"21212",
+//       pincode : 121001,
+//       phone :9625820226,
+//       Image : "https://platinumlist.net/guide/wp-content/uploads/2023/03/IMG-worlds-of-adventure.webp",
+//       email : "duamayank26@gamil.com"
+
+//     }
+//   )
+//   await user.save();
+//   // const u1 = await mongoose.findOne({ username: "Mayank"})
+//   // console.log(u1);
+  
+//   console.log("innnnnnn.......🚀🚀🚀");
+  
+//   }
+//   catch(err){
+//     console.log(err);
+//     await mongoose.disconnect()
+//   }
+// }
+// run().catch(console.dir);
